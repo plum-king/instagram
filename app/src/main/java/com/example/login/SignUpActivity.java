@@ -101,12 +101,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             inputPassword.requestFocus();
             return;
         }
-        else {
-            progressDialog.setMessage("Please wait while Registration...");
-            progressDialog.setTitle("Registration");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-        }
+        progressDialog.setMessage("Please wait while Registration...");
+        progressDialog.setTitle("Registration");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -122,11 +120,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this, "Welcome to Instagram",
-                                        Toast.LENGTH_SHORT);
+                                        Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 Toast.makeText(SignUpActivity.this, "Try Again",
-                                        Toast.LENGTH_SHORT);
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -134,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     // If sign in fails
                     progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, "Try Again",
-                            Toast.LENGTH_SHORT);
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
