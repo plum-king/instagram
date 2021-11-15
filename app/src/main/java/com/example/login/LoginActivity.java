@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-
-    private EditText login_id, login_password;
+    private TextInputEditText login_id, login_password;
     private Button login_btn, signup_btn;
 
     private FirebaseAuth mAuth;
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signup_btn:
-                startActivity(new Intent(this, SignUpActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
                 break;
             case R.id.login_btn:
                 userLogin();

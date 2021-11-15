@@ -23,7 +23,6 @@
         /*이메일 입력*/
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/create_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +30,7 @@
             android:hint="아이디(이메일)">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/InputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -39,7 +39,6 @@
         /*닉네임 입력*/
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/create_nickname"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +46,7 @@
             android:hint="사용자 닉네임">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/InputUserId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -54,7 +54,6 @@
 
         /*비밀번호 입력*/
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/create_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,6 +62,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/InputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
