@@ -1,3 +1,7 @@
+/*
+ * Layout: Login
+ * Feature:  파이어베이스 데이터베이스를 읽어와서 로그인
+ */
 package com.example.login;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
+        /*로그인 함수 이메일과 비밀번호*/
         mAuth.signInWithEmailAndPassword(id, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 progressDialog.dismiss();
