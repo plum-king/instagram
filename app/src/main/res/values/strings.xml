@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">javachip</string>
     <string name="cookie">가입하신 Instagram의 이용 약관 및 \n개인 정보 취급 방침에 동의하게 됩니다</string>
+    <string name="title">Instagram</string>
 </resources>
