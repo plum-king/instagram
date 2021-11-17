@@ -1,8 +1,7 @@
 /*
  * Layout: Create Account
- * Feature:  파이어베이스 데이터베이스에 회원가입 정보 저장.
- *           사용되는 액티비티의 id 머릿말 create_
- * */
+ * Feature:  파이어베이스 데이터베이스에 회원가입 정보 저장
+ */
 package com.example.login;
 
 import androidx.annotation.NonNull;
