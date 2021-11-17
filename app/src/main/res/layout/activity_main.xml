@@ -3,13 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!--Header-->
+    <RelativeLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MainHere" />
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/instagram_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:text="Instagram"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <ImageButton
+            android:id="@+id/plus_imgBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/heart_imgBtn"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/round_plus" />
+
+        <ImageButton
+            android:id="@+id/heart_imgBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/dm_imgBtn"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/round_heart" />
+
+        <ImageButton
+            android:id="@+id/dm_imgBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/round_dm" />
+
+    </RelativeLayout>
+
+    <!--Body-->
+    <ListView
+        android:id="@+id/list_mainView"
+        android:layout_below="@id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7" />
+
 
     <!-- 메뉴에 따라 바뀔 화면(Fragment?)-->
 <!--    <FrameLayout-->
