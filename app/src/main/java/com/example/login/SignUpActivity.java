@@ -122,7 +122,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         Toast.LENGTH_SHORT).show();
                             }
                             else {
-                                Toast.makeText(SignUpActivity.this, "Try Again",
+                                Toast.makeText(SignUpActivity.this, "You already have an account",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
