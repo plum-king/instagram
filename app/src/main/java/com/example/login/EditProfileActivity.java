@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,6 +60,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private Uri imageUri;
 
+//    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +85,7 @@ public class EditProfileActivity extends AppCompatActivity {
         fullname = (EditText) findViewById(R.id.edit_fullname);
         web = (EditText) findViewById(R.id.edit_website);
         bio = (EditText) findViewById(R.id.edit_bio);
-
+//        progressDialog = new ProgressDialog(this);
 
         readUser(uid);
 
@@ -137,9 +142,14 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void readUser(String uid) {
+//        progressDialog.setMessage("Please wait while Registration...");
+//        progressDialog.setTitle("Registration");
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
         mDatabase.child("Users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //progressDialog.dismiss();
                 User user = snapshot.getValue(User.class);
                 name.setText(user.userid);
 
@@ -158,15 +168,32 @@ public class EditProfileActivity extends AppCompatActivity {
                 }else{
                     bio.setText("");
                 }
-
-                Toast.makeText(getApplicationContext(),"성공!" , Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                //progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
             }
         });
+
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathRef = storageRef.child("profile_pic");
+
+        if(pathRef == null) {}
+        else {
+            StorageReference submitProfile = storageRef.child("profile_pic/" + uid + ".jpg");
+            submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(EditProfileActivity.this).load(uri).into(profile_pic);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        }
     }
 
     private void setUser(String uid, String name, String fullname, String web, String bio) {
@@ -201,7 +228,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(EditProfileActivity.this, "사진이 정상적으로 업로드됨", Toast.LENGTH_LONG).show();
             }
         });
     }
