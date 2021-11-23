@@ -1,9 +1,17 @@
 package com.example.login;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,19 +30,32 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE=0;
+
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     DatabaseReference mDatabase;
+    FirebaseStorage storage;
+
     String uid;
 
     ImageView close, done, profile_pic;
     TextView edit_pic;
     EditText name, fullname, web, bio;
+
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +68,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        uid = mUser.getUid();
+        storage = FirebaseStorage.getInstance();
 
-        Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
-        DatabaseReference email = mDatabase.child(uid).child("email");
-        DatabaseReference userid = mDatabase.child(uid).child("userid");
+        uid = mUser.getUid();
 
         close = (ImageView) findViewById(R.id.close);
         done = (ImageView) findViewById(R.id.done);
@@ -72,6 +92,10 @@ public class EditProfileActivity extends AppCompatActivity {
         edit_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
@@ -82,6 +106,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String getFullname = fullname.getText().toString();
                 String getWeb = web.getText().toString();
                 String getBio = bio.getText().toString();
+                String getPic;
 
                 if(getName.isEmpty()) {
                     name.setError("Name is Required");
@@ -93,6 +118,22 @@ public class EditProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            imageUri = data.getData();
+            try {
+                InputStream in = getContentResolver().openInputStream(imageUri);
+                Bitmap img = BitmapFactory.decodeStream(in);
+                in.close();
+                profile_pic.setImageBitmap(img);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void readUser(String uid) {
@@ -135,6 +176,7 @@ public class EditProfileActivity extends AppCompatActivity {
         hopperUpdates.put("fullname", fullname);
         hopperUpdates.put("web", web);
         hopperUpdates.put("bio", bio);
+
         hopperRef.updateChildren(hopperUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -147,6 +189,20 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        StorageReference storageRef = storage.getReference();
+        StorageReference riversRef = storageRef.child("profile_pic/" + uid + ".jpg");
+        UploadTask uploadTask = riversRef.putFile(imageUri);
 
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditProfileActivity.this, "사진이 정상적으로 업로드되지 않음", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(EditProfileActivity.this, "사진이 정상적으로 업로드됨", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
