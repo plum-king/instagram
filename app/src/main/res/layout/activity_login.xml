@@ -56,7 +56,7 @@
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="#4e97d1"
+            android:backgroundTint="@color/colorPrimary"
             android:text="Log in"/>
 
     </LinearLayout>
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입하기"
-            android:textColor="#4e97d1"
+            android:textColor="@color/colorPrimary"
             android:background="#00000000"/>
     </LinearLayout>
 </LinearLayout>
