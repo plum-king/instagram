@@ -111,7 +111,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 String getFullname = fullname.getText().toString();
                 String getWeb = web.getText().toString();
                 String getBio = bio.getText().toString();
-                String getPic;
 
                 if(getName.isEmpty()) {
                     name.setError("Name is Required");

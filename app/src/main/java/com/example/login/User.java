@@ -5,15 +5,13 @@ public class User {
     public String fullname;
     public String web;
     public String bio;
-    public String pic;
 
     public User(){}
 
-    public User(String userid, String fullname, String web, String bio, String pic) {
+    public User(String userid, String fullname, String web, String bio) {
         this.userid = userid;
         this.fullname=fullname;
         this.web=web;
         this.bio=bio;
-        this.pic=pic;
     }
 }
