@@ -1,5 +1,6 @@
 package com.example.login;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -27,18 +29,19 @@ import com.google.firebase.storage.UploadTask;
 import java.io.InputStream;
 
 public class NewFeedActivity extends MainActivity implements View.OnClickListener {
-    private static final String TAG = "NewFeedActivity";
+    public static final String TAG = "NewFeedActivity";
 
     //카메라 기능 없는 코드
     ImageView imageView;
     Button buttonImg;
-    ImageButton next;
     Button upTest;
+    EditText editText;
+    String content; // 게시글
 
-    private FirebaseAuth mAuth;
+    public FirebaseAuth mAuth;
     FirebaseUser mUser;
-    private FirebaseDatabase database;
-    private FirebaseStorage storage;
+    public FirebaseDatabase database;
+    public FirebaseStorage storage;
     String uid;
 
     // Create a storage reference from our app
@@ -65,7 +68,8 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
 
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         imageView = (ImageView)findViewById(R.id.main_image);
-
+        editText = findViewById(R.id.contents);
+        editText.setOnClickListener(this);
         buttonImg = (Button)findViewById(R.id.image);
         buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +77,10 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); //이미지 여러 개라는데 모르겠음
                 startActivityForResult(intent, Image_Request_Code);
             }
         });
 
-        next = (ImageButton) findViewById(R.id.next);
-        next.setOnClickListener(this);
         upTest = (Button)findViewById(R.id.upTest);
         upTest.setOnClickListener(this);
 
@@ -87,12 +88,13 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.next:
-                Intent intent = new Intent(NewFeedActivity.this, NewFeedActivity2.class);
-                startActivity(intent);
+            case R.id.back:
+                finish();
                 break;
             case R.id.upTest:
-                UploadImage(); //여기서는 잘 올라감
+                UploadImage();
+                //main으로 돌아가기
+                startActivity(new Intent(NewFeedActivity.this, MainActivity.class));
                 break;
         }
     }

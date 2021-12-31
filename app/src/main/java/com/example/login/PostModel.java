@@ -11,7 +11,7 @@ public class PostModel {
     //        public String person; // 친구태그
     public String location; // 위치
     //public String userprofileimage; // 회원가입시 프로필사진
-    //public String username; // 회원가입시 닉네임
+    public String username; // 회원가입시 닉네임
 
     //public int starCount = 0; // 좋아요 갯수
     //public Map<String, Boolean> stars = new HashMap<>(); // 좋아요 한 사람
