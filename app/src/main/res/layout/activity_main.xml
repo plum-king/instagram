@@ -30,7 +30,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/heart_imgBtn"
+            android:layout_toStartOf="@+id/heart_imgBtn"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
@@ -43,7 +43,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/dm_imgBtn"
+            android:layout_toStartOf="@+id/dm_imgBtn"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
@@ -68,18 +68,18 @@
     <!--Body-->
     <ListView
         android:id="@+id/list_mainView"
-        android:layout_below="@id/rel"
+        android:layout_below="@+id/rel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="7" />
 
 
     <!-- 메뉴에 따라 바뀔 화면(Fragment?)-->
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@+id/bottom"-->
-<!--        android:id="@+id/fragment_container" />-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
+        android:id="@+id/fragment_container" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
