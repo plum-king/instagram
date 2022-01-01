@@ -1,5 +1,6 @@
 package com.example.login;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -11,11 +12,17 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,21 +32,23 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewFeedActivity extends MainActivity implements View.OnClickListener {
-    private static final String TAG = "NewFeedActivity";
+    public static final String TAG = "NewFeedActivity";
 
     //카메라 기능 없는 코드
     ImageView imageView;
     Button buttonImg;
-    ImageButton next;
     Button upTest;
+    EditText content, title;
 
-    private FirebaseAuth mAuth;
+    public FirebaseAuth mAuth;
     FirebaseUser mUser;
-    private FirebaseDatabase database;
-    private FirebaseStorage storage;
-    String uid;
+    public FirebaseDatabase database;
+    public FirebaseStorage storage;
+    String uid, contentsTitle, contents;
 
     // Create a storage reference from our app
     StorageReference storageReference;
@@ -65,7 +74,12 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
 
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         imageView = (ImageView)findViewById(R.id.main_image);
-
+        content = (EditText) findViewById(R.id.contents);
+        //content.setOnClickListener(this);
+        contents = content.getText().toString();
+        title = (EditText) findViewById(R.id.contentsTitle);
+        //title.setOnClickListener(this);
+        contentsTitle = title.getText().toString();
         buttonImg = (Button)findViewById(R.id.image);
         buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +87,10 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); //이미지 여러 개라는데 모르겠음
                 startActivityForResult(intent, Image_Request_Code);
             }
         });
 
-        next = (ImageButton) findViewById(R.id.next);
-        next.setOnClickListener(this);
         upTest = (Button)findViewById(R.id.upTest);
         upTest.setOnClickListener(this);
 
@@ -87,12 +98,14 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.next:
-                Intent intent = new Intent(NewFeedActivity.this, NewFeedActivity2.class);
-                startActivity(intent);
+            case R.id.back:
+                finish();
                 break;
             case R.id.upTest:
-                UploadImage(); //여기서는 잘 올라감
+                UploadImage();
+                setFeed(uid, contents, contentsTitle);
+                //main으로 돌아가기
+                startActivity(new Intent(NewFeedActivity.this, MainActivity.class));
                 break;
         }
     }
@@ -128,22 +141,43 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
 
     public void UploadImage(){
         if(FilePathUri != null){
-            progressDialog.setTitle("Image is Uploading...");
+            progressDialog.setTitle("업로드 중");
             progressDialog.show();
-            StorageReference storageReference2 = storageReference.child( uid + "_feed_img/" + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
+            StorageReference storageReference2 = storageReference.child( uid + "_feed_img/" + contentsTitle + "." + GetFileExtension(FilePathUri));
             storageReference2.putFile(FilePathUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         //String TempImageName = contents.getText().toString().trim();
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "업로드 완료", Toast.LENGTH_LONG).show();
                     }
                 });
             up.setImageURL(storageReference2);
         }
         else{
-            Toast.makeText(NewFeedActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(NewFeedActivity.this, "이미지를 선택해주세요", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void setFeed(String uid, String contents, String contentsTitle) {
+        DatabaseReference hopperRef = databaseReference.child("Contents").child(contentsTitle);
+        Map<String, Object> hopperUpdates = new HashMap<>();
+        hopperUpdates.put("title", contentsTitle);
+        hopperUpdates.put("contents", contents);
+        hopperUpdates.put("uid", uid);
+
+        hopperRef.updateChildren(hopperUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getApplicationContext(),"저장을 완료했습니다", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"저장에 실패했습니다" , Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

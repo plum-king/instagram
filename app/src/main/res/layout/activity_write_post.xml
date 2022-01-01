@@ -13,55 +13,86 @@
         android:gravity="right"
         android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/next"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_right_arrows" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="43dp"
+                android:adjustViewBounds="true"
+                android:backgroundTint="#6A807474"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/arrow" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/upTest"
+                android:layout_width="50dp"
+                android:layout_height="43dp"
+                android:layout_gravity="right"
+                android:backgroundTint="#6A807474"
+                android:text="✔"
+                app:iconTint="@color/common_google_signin_btn_text_light_default" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/main_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                android:layout_width="165dp"
+                android:layout_height="268dp"
+                app:srcCompat="@android:drawable/ic_menu_crop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="이미지" />
+                <EditText
+                    android:id="@+id/contentsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:ems="10"
+                    android:hint="제목"
+                    android:inputType="textPersonName" />
 
-                <Button
-                    android:id="@+id/upTest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="사진 올리기 test" />
-
-                <ImageButton
-                    android:id="@+id/camera"
-                    android:layout_width="129dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_camera" />
-
+                <EditText
+                    android:id="@+id/contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="문구 입력"
+                    android:inputType="textPersonName" />
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/image"
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#6A807474"
+                android:text="이미지 추가하기" />
 
         </LinearLayout>
 
