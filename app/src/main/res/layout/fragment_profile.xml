@@ -177,6 +177,14 @@
                     android:id="@+id/bio"
                     android:textSize="13sp"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:maxLines="5"
+                    android:id="@+id/web"
+                    android:textSize="13sp"/>
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
