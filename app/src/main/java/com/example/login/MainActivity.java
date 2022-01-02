@@ -7,9 +7,11 @@ package com.example.login;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 
 import com.example.Adapter.PostAdapter;
 import com.example.Adapter.StoryAdapter;
@@ -74,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
         postRecycler.setAdapter(postAdapter);
     }
 
+        plusBtn = (ImageButton)findViewById(R.id.plus_imgBtn);
+        //tempBtn = (Button)findViewById(R.id.temp_btn);
+        plusBtn.setOnClickListener(this);
+        //tempBtn.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = database.getInstance().getReference();
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -86,5 +96,17 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         storyAdapter.stopListening();
         postAdapter.stopListening();
+    }
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.plus_imgBtn:
+                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
+                break;
+//            case R.id.temp_btn:
+//                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
+//                break;
+        }
     }
 }

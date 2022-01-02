@@ -111,7 +111,6 @@ FirebaseAuth mAuth;
                 }
 
                 setUser(uid, getName, getFullname, getWeb, getBio);
-                finish();
             }
         });
     }
@@ -142,6 +141,7 @@ FirebaseAuth mAuth;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //progressDialog.dismiss();
                 User user = snapshot.getValue(User.class);
+                assert user != null;
                 name.setText(user.userid);
 
                 if(user.fullname != null) {
