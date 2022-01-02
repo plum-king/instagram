@@ -75,11 +75,11 @@
 
 
     <!-- 메뉴에 따라 바뀔 화면(Fragment?)-->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom"
-        android:id="@+id/fragment_container" />
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/bottom"-->
+<!--        android:id="@+id/fragment_container" />-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

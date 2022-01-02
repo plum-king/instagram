@@ -119,7 +119,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
 
                 setUser(uid, getName, getFullname, getWeb, getBio);
-                finish();
             }
         });
     }

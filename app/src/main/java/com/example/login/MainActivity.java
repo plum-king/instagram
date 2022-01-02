@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -19,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    Fragment selectedFragment = null;
     Fragment profileFragment, homeFragment;
 
     @Override
@@ -29,9 +31,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationSelectedListener);
 
-        profileFragment = new ProfileFragment();
-        homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationSelectedListener
@@ -40,12 +40,18 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
-                    return true;
+//                    selectedFragment = new HomeFragment();
+                    break;
                 case R.id.nav_mypage:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
-                    return true;
+                    Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                    startActivity(intent);
+                    break;
             }
+
+//            if(selectedFragment != null) {
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+//            }
+
             return false;
         }
     };

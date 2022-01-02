@@ -1,26 +1,17 @@
-package com.example.login.Fragment;
+package com.example.login;
 
-import android.app.Activity;
-import android.content.Context;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.login.EditProfileActivity;
-import com.example.login.MainActivity;
-import com.example.login.R;
-import com.example.login.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,14 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Objects;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileFragment extends Fragment {
-    Activity activity;
-
-    private View view;
+public class ProfileActivity extends AppCompatActivity {
     Button editProfileButton;
     TextView name, fullname, bio, web;
     CircleImageView profile_pic;
@@ -53,10 +39,9 @@ public class ProfileFragment extends Fragment {
     String uid;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();     //현재 로그인한 유저
@@ -65,23 +50,22 @@ public class ProfileFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
 
-        name = view.findViewById(R.id.username);
-        fullname = view.findViewById(R.id.fullname);
-        bio = view.findViewById(R.id.bio);
-        web = view.findViewById(R.id.web);
-        profile_pic = view.findViewById(R.id.profile_pic);
+        name = findViewById(R.id.username);
+        fullname = findViewById(R.id.fullname);
+        bio = findViewById(R.id.bio);
+        web = findViewById(R.id.web);
+        profile_pic = findViewById(R.id.profile_pic);
 
         readUser(uid);
 
-        editProfileButton = view.findViewById(R.id.edit_profile);
+        editProfileButton = findViewById(R.id.edit_profile);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, EditProfileActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
                 startActivity(intent);
             }
         });
-        return view;
     }
 
     private void readUser(String uid) {
@@ -117,7 +101,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //progressDialog.dismiss();
-                Toast.makeText(getActivity(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
             }
         });
 
@@ -130,7 +114,7 @@ public class ProfileFragment extends Fragment {
             submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(requireActivity()).load(uri).into(profile_pic);
+                    Glide.with(getApplicationContext()).load(uri).into(profile_pic);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
