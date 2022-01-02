@@ -7,42 +7,11 @@
     android:layout_height="match_parent">
 
     <!--Header-->
-
-    <!--Body-->
-
-
-    <!-- 메뉴에 따라 바뀔 화면(Fragment?)-->
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@+id/bottom"-->
-<!--        android:id="@+id/fragment_container" />-->
-
-<!--    <ListView-->
-<!--        android:id="@+id/list_mainView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_below="@id/rel"-->
-<!--        android:layout_marginTop="2dp"-->
-<!--        android:layout_weight="7">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="TextView" />-->
-<!--    </ListView>-->
-
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/rel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
             <Button
                 android:id="@+id/instagram_btn"
@@ -114,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="contents" />
-    </LinearLayout>
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

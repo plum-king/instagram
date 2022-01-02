@@ -10,28 +10,20 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import android.content.ClipData;
+
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.os.PersistableBundle;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
