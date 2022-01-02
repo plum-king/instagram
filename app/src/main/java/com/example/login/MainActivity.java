@@ -76,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
         postRecycler.setAdapter(postAdapter);
     }
 
-        plusBtn = (ImageButton)findViewById(R.id.plus_imgBtn);
-        //tempBtn = (Button)findViewById(R.id.temp_btn);
-        plusBtn.setOnClickListener(this);
-        //tempBtn.setOnClickListener(this);
-
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = database.getInstance().getReference();
+//        plusBtn = (ImageButton)findViewById(R.id.plus_imgBtn);
+//        //tempBtn = (Button)findViewById(R.id.temp_btn);
+//        plusBtn.setOnClickListener(this);
+//        //tempBtn.setOnClickListener(this);
+//
+//        mAuth = FirebaseAuth.getInstance();
+//        databaseReference = database.getInstance().getReference();
 
     @Override
     protected void onStart() {
@@ -97,16 +97,16 @@ public class MainActivity extends AppCompatActivity {
         storyAdapter.stopListening();
         postAdapter.stopListening();
     }
-    }
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.plus_imgBtn:
-                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
-                break;
-//            case R.id.temp_btn:
+}
+//    @Override
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.plus_imgBtn:
 //                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
 //                break;
-        }
-    }
-}
+////            case R.id.temp_btn:
+////                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
+////                break;
+//        }
+//    }
+//}
