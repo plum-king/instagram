@@ -8,53 +8,83 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
+import com.example.Adapter.PostAdapter;
+import com.example.Adapter.StoryAdapter;
+import com.example.Model.Post;
+import com.example.Model.Story;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Home";
+    RecyclerView storyRecycler;
+    StoryAdapter storyAdapter;
 
-    //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
-
-    //getUerInfo
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-
+    RecyclerView postRecycler;
+    PostAdapter postAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getImages();
-    }
-    private void getImages(){
-        Log.d(TAG, "InitImage Bitmaps.");
-        mImageUrls.add("https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg");
-        mNames.add("init");
+        //Bottom Navigation
+        BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
+        bottom_navigation.setOnItemSelectedListener(item-> {
+                item.getItemId();
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_mypage:
+                        intent = new Intent(MainActivity.this, EditProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                } return true;
+            });
 
-        initRecyclerView();
-    }
-
-    private void initRecyclerView() {
-        Log.d(TAG, "Init Recycler View.");
+        //StoryRecycler
+        storyRecycler = findViewById(R.id.storyRecycler);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mNames, mImageUrls);
-        recyclerView.setAdapter(adapter);
+        storyRecycler.setLayoutManager(layoutManager);
+
+        FirebaseRecyclerOptions<Story> options =
+                new FirebaseRecyclerOptions.Builder<Story>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("ShortInfo"), Story.class)
+                .build();
+
+        storyAdapter = new StoryAdapter(options);
+        storyRecycler.setAdapter(storyAdapter);
+
+        //PostRecycler
+        postRecycler = findViewById(R.id.postRecycler);
+        postRecycler.setLayoutManager(new LinearLayoutManager(this));
+        FirebaseRecyclerOptions<Post> pOptions =
+                new FirebaseRecyclerOptions.Builder<Post>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Post"), Post.class)
+                .build();
+        postAdapter = new PostAdapter(pOptions);
+        postRecycler.setAdapter(postAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        storyAdapter.startListening();
+        postAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        storyAdapter.stopListening();
+        postAdapter.stopListening();
     }
 }

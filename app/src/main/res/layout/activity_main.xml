@@ -13,72 +13,69 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
-        <Button
-            android:id="@+id/instagram_btn"
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            app:srcCompat="@drawable/logo_text" />
+
+        <LinearLayout
+            android:id="@+id/top_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:text="@string/title"
-            android:textColor="#000000" />
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true">
 
-        <ImageButton
-            android:id="@+id/plus_imgBtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/heart_imgBtn"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/round_plus"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ContentDescription" />
+            <ImageButton
+                android:id="@+id/top_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="?android:attr/windowBackground"
+                android:src="@drawable/ic_add" />
 
-        <ImageButton
-            android:id="@+id/heart_imgBtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/dm_imgBtn"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/round_heart"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ContentDescription" />
+            <ImageButton
+                android:id="@+id/top_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="?android:attr/windowBackground"
+                android:src="@drawable/ic_heart" />
 
-        <ImageButton
-            android:id="@+id/dm_imgBtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/round_dm"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ContentDescription" />
+            <ImageButton
+                android:id="@+id/top_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="?android:attr/windowBackground"
+                android:src="@drawable/ic_send" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
     <!--Story-->
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/rel"
-        android:id="@+id/recycler"
+        android:id="@+id/storyRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_below="@id/rel"
+        android:scrollbars="horizontal"
+        android:orientation="horizontal"
+        />
 
     <!--Body-->
-    <ListView
-        android:id="@+id/list_mainView"
-        android:layout_below="@id/recycler"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storyRecycler"
+        android:scrollbars="vertical"
+        android:orientation="vertical"/>
 
     <!-- 메뉴에 따라 바뀔 화면(Fragment?)-->
 <!--    <FrameLayout-->
@@ -90,13 +87,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="#00ffffff">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bottom_navigation"
             app:itemIconTint="@color/black"
             app:labelVisibilityMode="unlabeled"
             android:background="?android:attr/windowBackground"
