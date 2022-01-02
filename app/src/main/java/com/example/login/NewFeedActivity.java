@@ -75,11 +75,7 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         imageView = (ImageView)findViewById(R.id.main_image);
         content = (EditText) findViewById(R.id.contents);
-        //content.setOnClickListener(this);
-        contents = content.getText().toString();
         title = (EditText) findViewById(R.id.contentsTitle);
-        //title.setOnClickListener(this);
-        contentsTitle = title.getText().toString();
         buttonImg = (Button)findViewById(R.id.image);
         buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +98,8 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.upTest:
+                contents = content.getText().toString();
+                contentsTitle = title.getText().toString();
                 UploadImage();
                 setFeed(uid, contents, contentsTitle);
                 //main으로 돌아가기
@@ -161,7 +159,7 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
     }
 
     private void setFeed(String uid, String contents, String contentsTitle) {
-        DatabaseReference hopperRef = databaseReference.child("Contents").child(contentsTitle);
+        DatabaseReference hopperRef = databaseReference.child("Contents").child(uid);
         Map<String, Object> hopperUpdates = new HashMap<>();
         hopperUpdates.put("title", contentsTitle);
         hopperUpdates.put("contents", contents);

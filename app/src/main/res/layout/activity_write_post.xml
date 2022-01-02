@@ -53,7 +53,7 @@
                 android:id="@+id/main_image"
                 android:layout_width="165dp"
                 android:layout_height="268dp"
-                app:srcCompat="@android:drawable/ic_menu_crop" />
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <LinearLayout
                 android:layout_width="match_parent"
