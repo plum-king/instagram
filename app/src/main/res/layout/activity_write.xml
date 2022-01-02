@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="false"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←" />
+
+        <TextView
+            android:id="@+id/textFeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:includeFontPadding="false"
+            android:text="  새 게시물                     "
+            android:textFontWeight="20"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/doneFeed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:text="✔" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="209dp"
+            android:gravity="top"
+            android:hint="문구 입력"
+            android:inputType="textPersonName"
+            android:lines="20" />
+
+        <Button
+            android:id="@+id/button_human"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사람 태그하기" />
+
+        <Button
+            android:id="@+id/button_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="위치 추가" />
+
+    </LinearLayout>
+
+</LinearLayout>
