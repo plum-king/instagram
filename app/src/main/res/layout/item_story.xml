@@ -6,7 +6,7 @@
     android:layout_margin="1dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="90dp"
+        android:layout_width="75dp"
         android:layout_height="90dp"
         app:cardCornerRadius="4dp"
         app:cardMaxElevation="2dp"
@@ -18,18 +18,19 @@
             android:layout_height="match_parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageView"
+                android:id="@+id/storyImg"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/new_story" />
+                android:padding="10dp"
+                android:background="@drawable/new_story" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/storyId"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:layout_below="@+id/imageView"
+                android:layout_below="@+id/storyImg"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
