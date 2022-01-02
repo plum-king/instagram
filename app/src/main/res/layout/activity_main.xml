@@ -17,12 +17,10 @@
             android:id="@+id/instagram_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:text="@string/title"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textColor="#000000" />
 
         <ImageButton
             android:id="@+id/plus_imgBtn"
@@ -35,7 +33,7 @@
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/round_plus"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ContentDescription" />
 
         <ImageButton
             android:id="@+id/heart_imgBtn"
@@ -48,7 +46,7 @@
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/round_heart"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ContentDescription" />
 
         <ImageButton
             android:id="@+id/dm_imgBtn"
@@ -61,17 +59,25 @@
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/round_dm"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ContentDescription" />
 
     </RelativeLayout>
+
+    <!--Story-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/rel"
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <!--Body-->
     <ListView
         android:id="@+id/list_mainView"
-        android:layout_below="@id/rel"
+        android:layout_below="@id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="7" />
+        android:layout_height="match_parent" />
 
 
     <!-- 메뉴에 따라 바뀔 화면(Fragment?)-->

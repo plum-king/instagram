@@ -73,7 +73,7 @@
             android:id="@+id/create_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="#4e97d1"
             android:text="Sign Up"/>
 
         <TextView
@@ -97,7 +97,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="로그인"
-            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:textColor="#4e97d1"
             android:background="#00000000"/>
     </LinearLayout>
 </LinearLayout>
