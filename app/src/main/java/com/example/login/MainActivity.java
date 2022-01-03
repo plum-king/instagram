@@ -4,14 +4,12 @@
  */
 package com.example.login;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import com.example.Adapter.PostAdapter;
 import com.example.Adapter.StoryAdapter;
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.nav_mypage:
-                        intent = new Intent(MainActivity.this, EditProfileActivity.class);
+                        intent = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent);
                         break;
                 } return true;
