@@ -19,14 +19,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.Model.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,13 +46,16 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
     ImageView imageView;
     Button buttonImg;
     Button upTest;
-    EditText content, title;
+    EditText post_description, post_title;
 
     public FirebaseAuth mAuth;
     FirebaseUser mUser;
     public FirebaseDatabase database;
     public FirebaseStorage storage;
-    String uid, contentsTitle, contents;
+    //Firebase 'Post' entry
+//    String uid, contentsTitle, contents;
+    String uid;
+/**/String description, postImg, title ,publisher, userImg;
 
     // Create a storage reference from our app
     StorageReference storageReference;
@@ -69,13 +76,32 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
 
         storageReference = storage.getInstance().getReference();
         databaseReference = database.getInstance().getReference();
+
+        //uid로 userid 가져오기
+        DatabaseReference mref;
+/**/    mref = FirebaseDatabase.getInstance().getReference("Users").child(uid).child("userid");
+        Toast.makeText(NewFeedActivity.this, uid, Toast.LENGTH_SHORT);
+
+        mref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                publisher = snapshot.getValue(String.class);
+            }
+            @Override public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(NewFeedActivity.this, "error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 //        String num = null;
 //        String filename = "feed" + num + ".jpg";
 
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         imageView = (ImageView)findViewById(R.id.main_image);
-        content = (EditText) findViewById(R.id.contents);
-        title = (EditText) findViewById(R.id.contentsTitle);
+///**/    content = (EditText) findViewById(R.id.post_description);
+//        title = (EditText) findViewById(R.id.post_title);
+        post_description = findViewById(R.id.post_description);
+        post_title = findViewById(R.id.post_title);
+
         buttonImg = (Button)findViewById(R.id.image);
         buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,10 +124,13 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.upTest:
-                contents = content.getText().toString();
-                contentsTitle = title.getText().toString();
+//                contents = content.getText().toString();
+//                contentsTitle = title.getText().toString();
+/**/            //Post Model 이용하기
+                description = post_description.getText().toString();
+                title = post_title.getText().toString();
                 UploadImage();
-                setFeed(uid, contents, contentsTitle);
+//                setFeed(description,postImg,publisher,userImg);
                 //main으로 돌아가기
                 startActivity(new Intent(NewFeedActivity.this, MainActivity.class));
                 break;
@@ -141,7 +170,7 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
         if(FilePathUri != null){
             progressDialog.setTitle("업로드 중");
             progressDialog.show();
-            StorageReference storageReference2 = storageReference.child( uid + "_feed_img/" + contentsTitle + "." + GetFileExtension(FilePathUri));
+            StorageReference storageReference2 = storageReference.child( uid + "_feed_img/" + post_title + "." + GetFileExtension(FilePathUri));
             storageReference2.putFile(FilePathUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -149,33 +178,62 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
                         //String TempImageName = contents.getText().toString().trim();
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "업로드 완료", Toast.LENGTH_LONG).show();
+                        //ShortInfo에서 storyUrl 가져오기
+                        DatabaseReference mref2;
+                        mref2 = FirebaseDatabase.getInstance().getReference("ShortInfo").child(publisher).child("storyUrl");
+
+                        mref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                userImg = snapshot.getValue(String.class);
+                                setFeed("", "", "https://lh3.googleusercontent.com/-8ThovF_SaJ0/W1xbDru2HZI/AAAAAAADmdM/DHY-uUP9EFkZIMO-ForkAyKuF2szAoBtACHMYCw/s0/adb04255fdd0b20303a1abbc8c463228d78568ce.jpg"
+                                        , publisher, userImg);
+                            }
+                            @Override public void onCancelled(@NonNull DatabaseError error) {}
+                        });
+/**/                    storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                DatabaseReference root = FirebaseDatabase.getInstance().getReference("Post");
+                                postImg = uri.toString();
+                                Post post = new Post(userImg, publisher, title, postImg, description);
+                                root.child(publisher).setValue(post);
+                            }
+                        });
                     }
                 });
             up.setImageURL(storageReference2);
+
         }
         else{
             Toast.makeText(NewFeedActivity.this, "이미지를 선택해주세요", Toast.LENGTH_LONG).show();
         }
     }
-
-    private void setFeed(String uid, String contents, String contentsTitle) {
-        DatabaseReference hopperRef = databaseReference.child("Contents").child(uid);
+/**/
+    private void setFeed(String description, String title, String postImg, String publisher, String userImg) {
+        DatabaseReference hopperRef = databaseReference.child("Post").child(publisher);
         Map<String, Object> hopperUpdates = new HashMap<>();
-        hopperUpdates.put("title", contentsTitle);
-        hopperUpdates.put("contents", contents);
-        hopperUpdates.put("uid", uid);
+        hopperUpdates.put("description", description);
+        hopperUpdates.put("postImg", postImg);
+        hopperUpdates.put("postTitle", title);
+        hopperUpdates.put("publisher", publisher);
+        hopperUpdates.put("userImg", userImg);
+//        private String userImg;
+//        private String publisher;
+//        private String postImg;
+//        private String postTitle;
+//        private String description;
 
         hopperRef.updateChildren(hopperUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(getApplicationContext(),"저장을 완료했습니다", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "저장을 완료했습니다", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(),"저장에 실패했습니다" , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "저장에 실패했습니다", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }

@@ -41,10 +41,11 @@ public class PostAdapter extends FirebaseRecyclerAdapter<Post, PostAdapter.PostV
 //                .error(R.drawable.checked_story)
 //                .into(holder.storyImg);
         holder.tv_userId.setText(model.getPublisher());
-        holder.tv_description.setText(model.getPublisher());
+        holder.tv_title.setText(model.getPostTitle());
         holder.tv_description.setText(model.getDescription());
 
-        Picasso.get().load(model.getPostImg()).fit().into(holder.iv_post);
+        Picasso.get().load(model.getPostImg()).
+                error(R.drawable.ic_close).fit().into(holder.iv_post);
         Glide.with(holder.cv_user.getContext())
                 .load(model.getUserImg()).
                 error(R.drawable.checked_story).
@@ -63,7 +64,7 @@ public class PostAdapter extends FirebaseRecyclerAdapter<Post, PostAdapter.PostV
 
         CircleImageView cv_user;
         ImageView iv_post;
-        TextView tv_userId, tv_publisher, tv_description;
+        TextView tv_userId, tv_title, tv_description;
 
         public PostViewHolder(@NonNull View itemView) {
 
@@ -72,7 +73,7 @@ public class PostAdapter extends FirebaseRecyclerAdapter<Post, PostAdapter.PostV
             cv_user = itemView.findViewById(R.id.userImg);
             iv_post = itemView.findViewById(R.id.postImg);
             tv_userId = itemView.findViewById(R.id.userId);
-            tv_publisher = itemView.findViewById(R.id.publisher);
+            tv_title = itemView.findViewById(R.id.post_title);
             tv_description = itemView.findViewById(R.id.description);
         }
 //        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.decelerate_interpolator);
