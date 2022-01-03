@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -30,14 +31,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Calendar;
 
 public class NewFeedActivity extends MainActivity implements View.OnClickListener {
     public static final String TAG = "NewFeedActivity";
@@ -198,6 +202,7 @@ public class NewFeedActivity extends MainActivity implements View.OnClickListene
                                 postImg = uri.toString();
                                 Post post = new Post(userImg, publisher, title, postImg, description);
                                 root.child(publisher).setValue(post);
+                                root.child(publisher).child("timestamp").setValue(ServerValue.TIMESTAMP);
                             }
                         });
                     }

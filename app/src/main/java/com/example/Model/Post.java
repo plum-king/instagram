@@ -10,15 +10,6 @@ public class Post {
     //private String liker;
     //private String comments;
     //private String saver;
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
-    }
-
     public Post(String userImg, String publisher, String postTitle, String postImg, String description) {
         this.userImg = userImg;
         this.publisher = publisher;
@@ -45,6 +36,15 @@ public class Post {
     public String getDescription() {return description;}
 
     public void setDescription(String description) {this.description = description;}
+
+
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
+    }
 
 //    public String getLiker() {return liker;}
 //

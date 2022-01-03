@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         postRecycler.setLayoutManager(new LinearLayoutManager(this));
         FirebaseRecyclerOptions<Post> pOptions =
                 new FirebaseRecyclerOptions.Builder<Post>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("Post"), Post.class)
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Post").orderByChild("timestamp"), Post.class)
                 .build();
         postAdapter = new PostAdapter(pOptions);
         postRecycler.setAdapter(postAdapter);
