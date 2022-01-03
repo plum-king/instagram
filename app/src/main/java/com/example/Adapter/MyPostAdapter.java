@@ -10,22 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.Model.Post;
+import com.example.Model.MyPost;
 import com.example.login.R;
+
 
 
 import java.util.List;
 
+
+
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostViewHolder> {
 
     private Context context;
-    private List<Post> mPosts;
+    private List<MyPost> myPosts;
 
-    public MyPostAdapter(Context context, List<Post> mPosts) {
+    public MyPostAdapter(Context context, List<MyPost> myPosts) {
         this.context = context;
-        this.mPosts = mPosts;
+        this.myPosts = myPosts;
     }
-
 
     @NonNull
     @Override
@@ -37,19 +39,24 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
 
     @Override
     public void onBindViewHolder(@NonNull MyPostViewHolder holder, int position) {
-        Post post = mPosts.get(position);
+        int safePosition = holder.getAdapterPosition();
+        MyPost post = myPosts.get(safePosition);
+
+        holder.publisher = post.getPublisher();
         Glide.with(holder.post_img.getContext())
-                .load(post.getPostImg())
+                .load(post.getpostImg())
                 .into(holder.post_img);
     }
 
     @Override
     public int getItemCount() {
-        return mPosts.size();
+        return myPosts.size();
     }
+
 
     public class MyPostViewHolder extends RecyclerView.ViewHolder {
         public ImageView post_img;
+        String publisher;
 
         public MyPostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,3 +66,4 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
     }
 
 }
+
