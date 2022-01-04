@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
                         break;
                     case R.id.nav_mypage:
-                        intent = new Intent(MainActivity.this, EditProfileActivity.class);
+                        intent = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent);
                         break;
                 } return true;

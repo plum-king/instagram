@@ -180,9 +180,9 @@ public class ProfileActivity extends AppCompatActivity {
                 postList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     MyPost post = dataSnapshot.getValue(MyPost.class);
-                    //if(post.getPublisher().equals(name)) {
+                    //if(post.getPublisher().equals(uid)) {
                         postList.add(post);
-//                    }
+                    //}
                 }
                 Collections.reverse(postList);
                 myPostAdapter.notifyDataSetChanged();
