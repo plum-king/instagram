@@ -7,16 +7,12 @@ public class Post {
     private String postTitle;
     private String description;
 
-    //private String liker;
-    //private String comments;
-    //private String saver;
     public Post(String userImg, String publisher, String postTitle, String postImg, String description) {
         this.userImg = userImg;
         this.publisher = publisher;
         this.postTitle = postTitle;
         this.postImg = postImg;
         this.description = description;
-        //this.liker = liker;
     }
 
     public Post() {}
@@ -45,8 +41,4 @@ public class Post {
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
     }
-
-//    public String getLiker() {return liker;}
-//
-//    public void setLiker(String liker) {this.liker = liker;}
 }
