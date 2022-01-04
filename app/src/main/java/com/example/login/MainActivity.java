@@ -10,6 +10,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.Adapter.PostAdapter;
 import com.example.Adapter.StoryAdapter;
@@ -19,12 +27,14 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     RecyclerView storyRecycler;
     StoryAdapter storyAdapter;
 
     RecyclerView postRecycler;
     PostAdapter postAdapter;
+
+    ImageButton top_add, top_heart, top_send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.nav_mypage:
-                        intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        intent = new Intent(MainActivity.this, EditProfileActivity.class);
                         startActivity(intent);
                         break;
                 } return true;
@@ -68,19 +78,36 @@ public class MainActivity extends AppCompatActivity {
         postRecycler.setLayoutManager(new LinearLayoutManager(this));
         FirebaseRecyclerOptions<Post> pOptions =
                 new FirebaseRecyclerOptions.Builder<Post>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("Post"), Post.class)
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Post").orderByChild("timestamp"), Post.class)
                 .build();
         postAdapter = new PostAdapter(pOptions);
         postRecycler.setAdapter(postAdapter);
+
+        //Top Button
+        top_add = findViewById(R.id.top_add);
+        top_heart = findViewById(R.id.top_heart);
+        top_send = findViewById(R.id.top_send);
+
+        top_add.setOnClickListener(this);
+        top_heart.setOnClickListener(this);
+        top_send.setOnClickListener(this);
     }
 
-//        plusBtn = (ImageButton)findViewById(R.id.plus_imgBtn);
-//        //tempBtn = (Button)findViewById(R.id.temp_btn);
-//        plusBtn.setOnClickListener(this);
-//        //tempBtn.setOnClickListener(this);
-//
-//        mAuth = FirebaseAuth.getInstance();
-//        databaseReference = database.getInstance().getReference();
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.top_add:
+                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
+                break;
+            //다른 화면 추가
+            case R.id.top_heart:
+                Toast.makeText(this, "Heart Activity", Toast.LENGTH_SHORT);
+                break;
+            case R.id.top_send:
+                Toast.makeText(this, "Send Activity", Toast.LENGTH_SHORT);
+                break;
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -96,15 +123,3 @@ public class MainActivity extends AppCompatActivity {
         postAdapter.stopListening();
     }
 }
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.plus_imgBtn:
-//                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
-//                break;
-////            case R.id.temp_btn:
-////                startActivity(new Intent(MainActivity.this, NewFeedActivity.class));
-////                break;
-//        }
-//    }
-//}

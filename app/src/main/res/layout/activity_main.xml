@@ -34,7 +34,7 @@
                 android:id="@+id/top_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="20dp"
                 android:background="?android:attr/windowBackground"
                 android:src="@drawable/ic_add" />
 
@@ -42,7 +42,7 @@
                 android:id="@+id/top_heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="20dp"
                 android:background="?android:attr/windowBackground"
                 android:src="@drawable/ic_heart" />
 
@@ -50,7 +50,7 @@
                 android:id="@+id/top_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="10dp"
                 android:background="?android:attr/windowBackground"
                 android:src="@drawable/ic_send" />
 

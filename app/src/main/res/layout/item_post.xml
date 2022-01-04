@@ -19,7 +19,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/ic_verified" />
+            />
 
             <TextView
                 android:id="@+id/userId"
@@ -67,7 +67,6 @@
                 android:id="@+id/postImg"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@drawable/common_google_signin_btn_icon_disabled"
                 android:padding="2dp" />
 
             <TextView
@@ -76,22 +75,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="좋아요 13명"
+                android:text="좋아요 0명"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_below="@id/liker"
-                android:id="@+id/publisher"
+                android:id="@+id/post_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/liker"
                 android:layout_marginStart="8dp"
                 android:text="javachip"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_below="@id/publisher"
+                android:layout_below="@id/post_title"
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
