@@ -37,6 +37,15 @@
             android:name=".SignUpActivity"
             android:exported="false"/>
         <activity android:name=".NewFeedActivity" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReelsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

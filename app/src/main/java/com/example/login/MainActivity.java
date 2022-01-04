@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +48,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_reels:
+                        intent = new Intent(MainActivity.this, ReelsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_search:
+                        intent = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_shop:
+                        intent = new Intent(MainActivity.this, ShopActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.nav_mypage:
