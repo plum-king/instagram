@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,6 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseStorage storage;
 
     String uid;
+    String profileid; // == name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         mPostRecycler = findViewById(R.id.recycler_view);
         mPostRecycler.setHasFixedSize(true);
-
-
+                
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         mPostRecycler.setLayoutManager(linearLayoutManager);
 
@@ -200,7 +203,7 @@ public class ProfileActivity extends AppCompatActivity {
                 int i = 0;
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Post post = dataSnapshot.getValue(Post.class);
-                    //if(post.getPublisher().equals(name)) {
+                    //if(post.getPublisher().equals(profileid)) {
                         i++;
                     //}
                 }
@@ -214,3 +217,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 }
+
+
+
